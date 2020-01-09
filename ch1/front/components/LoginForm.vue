@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container v-if="!me">
       <v-card>
           <v-form ref="form" v-model="valid" @submit.prevent="onLogin">
               <v-container>
@@ -17,10 +17,16 @@
                     required
                     :rules="passwordRules">
                   </v-text-field>
-                  <v-btn type="submit" :disabled= "!valid">로그인</v-btn>
+                  <v-btn type="submit" :disabled= "!valid" >로그인</v-btn>
                   <v-btn nuxt-to="/signup">회원가입</v-btn>
               </v-container>
           </v-form>
+      </v-card>
+  </v-container>
+  <v-container v-else>
+      <v-card>
+          {{ me.nickname }}님이 로그인되었습니다.
+          <v-btn v-on:click="onLogout">로그아웃</v-btn>
       </v-card>
   </v-container>
 </template>
@@ -43,7 +49,21 @@ export default {
     },
     methods:{
         onLogin(){
-            this.$refs.form.validate();
+            if(this.$refs.form.validate()){
+                this.$store.dispatch('users/logIn',{
+                    email: this.email,
+                    nickname: 'pius',
+                })
+            }
+        },
+        onLogout(){
+            // console.log('vue')
+            this.$store.dispatch('users/logOut');
+        }
+    },
+    computed:{
+        me(){
+            return this.$store.state.users.me;
         }
     }
 

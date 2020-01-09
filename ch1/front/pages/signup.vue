@@ -27,6 +27,7 @@
               :rules="passwordCheckRules"
             />
             <v-text-field
+              v-model="nickname"
               label="닉네임"
               type="nickname"
               required
@@ -74,8 +75,20 @@ export default {
   methods:{
     onSubmitForm(){
       if(this.$refs.form.validate()){
-        console.log(this.valid);
-        alert('회원가입시도');
+        this.$store.dispatch('users/signUp',{
+          email : this.email,
+          password : this.password,
+          nickname : this.nickname
+        })
+        .then(()=>{
+          this.$router.push('/');
+        })
+        .catch(()=>{
+          alert('실패');
+        })
+
+        // console.log(this.valid);
+        // alert('회원가입시도');
       }else{
         alert('회원가입실패');
       }

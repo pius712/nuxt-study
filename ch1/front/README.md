@@ -31,6 +31,25 @@ buildModule - nuxt v2.9 이상에서 사용이 가능하고 개발환경에서 �
 
 리액트는 [앤트디자인(ant design)](https://ant.design/)이 유명하다고 한다.  
 
+
+## Vuex 
+
+웹의 크기가 커지면 이를 모듈별로 관리할 필요성이 생긴다. 
+
+### module
+
+
+## 더미 데이터
+
+## context
+
+dispatch: ƒ (_type, _payload, _options)
+commit: ƒ (_type, _payload, _options)
+getters: {}
+state: {__ob__: Observer}
+rootGetters: {}  // 인덱스 모듈의 getters
+rootState: {__ob__: Observer} //인덱스 모듈의 state
+
 ### 아이콘 
 
 [MaterialDesignIcon](https://materialdesignicons.com/)을 사용할 수 있다. 여기에 있는 머터리얼 아이콘을 사용하기 위해서는 `mdi-`를 전치사(?)처럼 앞에 붙여줘야한다. 
