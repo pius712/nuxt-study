@@ -18,8 +18,6 @@
                 </v-toolbar-items>
             </v-toolbar>
         </nav>
-        <div>{{ name }}</div>
-        <v-btn @click="onChangeName">바잉~</v-btn> 
         <v-row>
             <v-col col="12" md="4">
                 <login-form></login-form>

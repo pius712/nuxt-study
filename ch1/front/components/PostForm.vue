@@ -34,25 +34,29 @@ export default {
         }
     },
     computed:{
-        ...mapState(['users/me'])
+        ...mapState('users',['me'])
     },
     methods:{
-        onChangeTextareas(){
-            this.hideDetails = false;
-
+        onChangeTextareas(value){
+            if(value.length){
+                this.hideDetails = true;
+                this.success = false;
+                this.successMessage = '';
+            }
             //글자 칠때마다 발생하는 메서드 input 
         },
         onSubmitForm(){
             if(this.$refs.form.validate()){
+                console.log(this.me);
                 this.$store.dispatch('posts/add', {
                     content: this.content,
                     User:{
                         nickname: this.me.nickname,
                     },
                     Comments:[],
-                    Images:[],
-                    Id: Date.now(),
-                    createdAt: Data.now(),
+                    images:[],
+                    id: Date.now(),
+                    createdAt: Date.now(),
                 })
                 .then(()=>{
                     this.hideDetails = false;

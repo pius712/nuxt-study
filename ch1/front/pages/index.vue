@@ -4,10 +4,8 @@
       <post-form v-if="me"></post-form>
     </v-container>
     <v-container>
-      <post-card></post-card>
-      <post-card></post-card>
-      <post-card></post-card>
-      <post-card></post-card>
+      <post-card v-for="p in mainPosts" :key="p.id" :post = "p"></post-card>
+      
     </v-container>
   </div>
 </template>
@@ -31,6 +29,9 @@ export default {
     // ...mapState(['users/me'])
     me(){
       return this.$store.state.users.me;
+    },
+    mainPosts(){
+      return this.$store.state.posts.mainPosts;
     }
   }
 }
