@@ -43,7 +43,7 @@
                         <span>{{c.User.nickname[0]}}</span>
                     </v-list-item-avatar>
                     <v-list-item-content>
-                        <h3>{{ c.User.nickname[0] }}</h3>
+                        <h3>{{ c.User.nickname }}</h3>
                         <div>{{ c.content }}</div>
                     </v-list-item-content>
                 </v-list-item>
@@ -76,7 +76,7 @@ export default {
 
         },
         onToggleComment(){
-            this.commentOpened = true;
+            this.commentOpened = !this.commentOpened;
         }
     },
     components:{

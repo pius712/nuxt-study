@@ -7,6 +7,9 @@ export const mutations = {
     setMe(state, payload){
         console.log("setME");
         state.me = payload;   // mutation 은 비동기 작업이 있으면 안된다. axios 같은
+    },
+    change(state,nick){
+        state.me.nickname = nick;
     }
 };
 
@@ -23,4 +26,7 @@ export const actions = {  // 비동기 작업을 하는
         // console.log('store')
         context.commit('setMe', null);
     },
+    changeNick(context, nick){
+        context.commit('change', nick);
+    }   
 }
