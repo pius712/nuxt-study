@@ -6,6 +6,7 @@
                 piusbook
             </v-toolbar-title>
             <v-spacer></v-spacer>
+            
             <v-toolbar-items>
                 <v-btn text>
                     <nuxt-link to="/">홈</nuxt-link>
