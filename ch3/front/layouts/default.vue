@@ -8,7 +8,13 @@
             
                 <v-spacer></v-spacer>
                 <v-toolbar-items>
-                    <v-text-field label="검색" prepend-icon="mdi-magnify" :style="{alignItems: 'center'}"/>
+                    <v-form @submit.prevent="onSearchHashtag">
+                        <v-text-field 
+                        v-model="hashtag"
+                        label="검색" 
+                        prepend-icon="mdi-magnify" 
+                        :style="{alignItems: 'center'}"/>
+                    </v-form>
                     <v-btn text nuxt to="/profile">
                         <div>프로필</div>
                     </v-btn>
@@ -40,6 +46,11 @@ export default {
           title: '디폴트',
       }
     },
+    data(){
+        return ({
+            hashtag:'',
+        })
+    },
     components:{
         LoginForm,
     },
@@ -51,6 +62,12 @@ export default {
     methods:{
         onChangeName(){
             this.$store.dispatch('users/signUp');
+        },
+        onSearchHashtag(){
+            this.$router.push({
+                path: `/hashtag/${this.hashtag}`
+            });
+            this.hashtag = '';
         }
     }
 }

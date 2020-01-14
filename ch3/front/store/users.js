@@ -1,20 +1,14 @@
 export const state = ()=>({
     me: null,
-    followerList:[{
-        id: "aksfbsgnlfls",
-        nickname: "pius"
-    },{
-        id: "aksfbs12",
-        nickname: "pius12"
-    }],
-    followingList:[{
-        id: "aksfbsgnlfls",
-        nickname: "pius"
-    },{
-        id: "aksfbs12",
-        nickname: "pius12"
-    }],
+    followerList:[],
+    followingList:[],
+    hasMoreFollower: true,
+    hasMoreFollowing: true,
 });
+
+const totalFollowers = 8;
+const totalFollowings = 6;
+const limit = 3;
 
 export const mutations = {
     setMe(state, payload){
@@ -37,6 +31,25 @@ export const mutations = {
     rmFollowing(state, payload){
         const idx = state.followingList.findIndex(v=> v.id === payload.id);
         state.followingList.splice(idx,1);
+    },
+    loadFollowings(state){
+        const diff = totalFollowings - state.followingList.length;
+        const fakeUsers = Array(diff>limit ? limit : diff).fill().map(v=>({
+            id:Math.random().toString(),
+            nickname: Math.floor(Math.random()*1000),
+        }));
+        state.followingList = state.followingList.concat(fakeUsers);
+        state.hasMoreFollowing = fakeUsers.length === limit
+    },
+    loadFollowers(state){
+        const diff = totalFollowers -state.followerList.length;
+        const fakeUsers = Array(diff>limit ? limit : diff).fill().map(v=>({
+            id:Math.random().toString(),
+            nickname: Math.floor(Math.random()*1000),
+        }));
+        state.followerList = state.followerList.concat(fakeUsers);
+        state.hasMoreFollower = fakeUsers.length === limit
+        
     }
 };
 
@@ -72,5 +85,16 @@ export const actions = {  // 비동기 작업을 하는
         console.log(payload);
         
         context.commit('rmFollowing', payload);
+    },
+    loadFollowers(context,playload){
+        if(context.state.hasMoreFollower){
+            context.commit('loadFollowers');
+        }
+    },   
+    loadFollowings(context,playload){
+        if(context.state.hasMoreFollowing){
+            context.commit('loadFollowings');
+        }
+        
     }   
 }

@@ -2,12 +2,14 @@
     <div>
         <v-card style="margin-bottom: 20px">
             <!-- <v-img src="/nana.png"/> -->
+            <v-card-title>
+                <h3>
+                    <nuxt-link :to="'/user/' + post.id">{{ this.post.User.nickname}}</nuxt-link>
+                </h3>
+            </v-card-title>
             <v-card-text>
                 <div>
-                    <h3>{{ this.post.User.nickname}}</h3>
-                    <nuxt-link :to="'/post/' + post.id">
-                        <div>{{ this.post.content }}</div>
-                    </nuxt-link>
+                    <div>{{ this.post.content }}</div>
                 </div>
             </v-card-text>
             <v-card-actions>
@@ -87,6 +89,9 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+a{
+    color: inherit;
+    text-decoration: none;
+}
 </style>
