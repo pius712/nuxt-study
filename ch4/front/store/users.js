@@ -62,20 +62,57 @@ export const actions = {
     console.log(context);
 
     console.log(this.$axios);
-    this.$axios.post('http://localhost:8080/user', {
-      email: payload.email,
-      nickname: payload.nickname,
-      password: payload.password,
-    });
+    this.$axios
+      .post(
+        'http://localhost:8080/user',
+        {
+          email: payload.email,
+          nickname: payload.nickname,
+          password: payload.password,
+        },
+        {
+          withCredentials: true,
+        },
+      )
+      .then(response => {
+        context.commit('setMe', payload);
+      })
+      .catch(err => {
+        console.error(err);
+      });
     // 서버에 회원가입 요청을 보내는 부분
-    context.commit('setMe', payload);
+    // context.commit('setMe', payload);
   },
   logIn(context, payload) {
-    context.commit('setMe', payload);
+    this.$axios
+      .post(
+        'http://localhost:8080/user/login',
+        {
+          email: payload.email,
+          password: payload.password,
+        },
+        {
+          withCredentials: true,
+        },
+      )
+      .then(res => {
+        context.commit('setMe', payload);
+      })
+      .catch(err => {
+        console.error(err);
+      });
   },
   logOut(context) {
+    this.$axios
+      .post('http://localhost:8080/user/logout', {}, { withCredentials: true })
+      .then(data => {
+        context.commit('setMe', null);
+      })
+      .catch(err => {
+        console.error(err);
+      });
     // console.log('store')
-    context.commit('setMe', null);
+    // context.commit('setMe', null);
   },
   changeNick(context, nick) {
     context.commit('change', nick);
