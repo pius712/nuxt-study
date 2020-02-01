@@ -15,6 +15,7 @@ module.exports = () => {
         try {
           console.log(email);
           const exUser = await db.User.findOne({ where: { email } });
+          console.log('exUser', exUser);
           if (!exUser) {
             return done(null, false, { reson: '존재하지 않는 사용자입니다' });
             // done(에러, 성공, 실패);

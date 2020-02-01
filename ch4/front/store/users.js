@@ -96,7 +96,7 @@ export const actions = {
         },
       )
       .then(res => {
-        context.commit('setMe', payload);
+        context.commit('setMe', res.data);
       })
       .catch(err => {
         console.error(err);

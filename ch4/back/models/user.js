@@ -1,6 +1,6 @@
 module.exports = (sequelize, dataTypes) => {
   const User = sequelize.define(
-    'user',
+    'User',
     {
       email: {
         type: dataTypes.STRING(40),
@@ -22,6 +22,9 @@ module.exports = (sequelize, dataTypes) => {
       // timestamps: false, false 안하면 created_at, updated_at 자동으로 추가된다.
     },
   );
-  User.associate = db => {};
+  User.associate = db => {
+    db.User.hasMany(db.Post);
+    db.User.hasMany(db.Comment);
+  };
   return User;
 };

@@ -1,10 +1,11 @@
 const express = require('express');
-const app = express();
+const router = express.Router();
 const bcrypt = require('bcrypt');
 const { User } = require('../models');
 const passport = require('passport');
+const { isLoggedIn, isNotLoggedIn } = require('./middleware');
 
-app.post('/', async (req, res, next) => {
+router.post('/', isNotLoggedIn, async (req, res, next) => {
   try {
     // console.log(req.body);
     const hash = await bcrypt.hash(req.body.password, 12);
@@ -39,14 +40,20 @@ app.post('/', async (req, res, next) => {
       }
       return req.login(user, async err => {
         //세션에다 사용자 정보 저장 ( how? sereilizeUser )
+        console.log('routes /', user);
         if (err) {
           console.error(err);
           return next(err);
         }
+        return res.status(201).json(newUser);
         // return res.json(user);
       });
     })(req, res, next);
-    return res.status(201).json(newUser);
+    // return res.status(201).json(newUser);
+    // return res.json(user);
+    console.log('req.user');
+    console.log(req.user);
+
     //newUser은 Model인데, 이 Model은 js 객체의 인스턴스이다. 따라서 json()함수를 사용해서 json으로 만들 수 있다.
   } catch (err) {
     console.error(err);
@@ -57,11 +64,11 @@ app.post('/', async (req, res, next) => {
   }
 });
 
-// app.post('/user/login', (req, res) => {
+// router.post('/user/login', (req, res) => {
 //   req.body.email;
 //   req.body.password;
 // });
-app.post('/login', (req, res, next) => {
+router.post('/login', isNotLoggedIn, (req, res, next) => {
   console.log(req.body);
   passport.authenticate('local', (err, user, info) => {
     if (err) {
@@ -85,7 +92,8 @@ app.post('/login', (req, res, next) => {
 }); //authenticate(strategy, options)
 // local strategy 실행 --> return done() 이게 뒤에 콜백 인자로 들어온다.
 
-app.post('/logout', (req, res) => {
+router.post('/logout', isLoggedIn, (req, res) => {
+  console.log('logout');
   console.log(req.user);
   console.log(req.isAuthenticated());
   if (req.isAuthenticated()) {
@@ -94,4 +102,4 @@ app.post('/logout', (req, res) => {
     return res.status(200).send('로그아웃 되었습니다.');
   }
 });
-module.exports = app;
+module.exports = router;
